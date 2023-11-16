@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-// Subject interface
+
 interface Subject {
     void attach(Observer observer);
     void detach(Observer observer);
     void notifyObservers();
 }
 
-// CricketMatch class
+
 class CricketMatch {
     private String matchDetails;
 
@@ -21,12 +21,12 @@ class CricketMatch {
     }
 }
 
-// Observer interface
+
 interface Observer {
     void update(CricketMatch match);
 }
 
-// ConcreteSubject class
+
 class ConcreteSubject implements Subject {
     private List<Observer> observers = new ArrayList<>();
     private CricketMatch currentMatch;
@@ -54,19 +54,19 @@ class ConcreteSubject implements Subject {
     }
 }
 
-// ConcreteObserver class
+
 class ConcreteObserver implements Observer {
     private CricketMatch currentMatch;
 
     @Override
     public void update(CricketMatch match) {
         this.currentMatch = match;
-        // Update the observer's display or perform any other necessary actions
+       
         System.out.println("Observer updated with match details: " + match.getMatchDetails());
     }
 }
 
-// MainScreen class
+
 class MainScreen implements Observer {
     private ConcreteSubject subject;
 
@@ -76,35 +76,35 @@ class MainScreen implements Observer {
     }
 
     void displayLiveMatches(List<CricketMatch> matches) {
-        // Display the list of live matches
+       
         System.out.println("Main Screen: Live Matches - " + matches);
     }
 
     void selectMatch(CricketMatch match) {
-        // Transition to the ball-by-ball coverage screen
+        
         BallByBallCoverageScreen coverageScreen = new BallByBallCoverageScreen(subject);
-        subject.setMatch(match); // Simulate selecting a match
+        subject.setMatch(match); 
     }
 
     @Override
     public void update(CricketMatch match) {
-        // Handle updates from the subject
+      
         System.out.println("Main Screen: Received match update - " + match.getMatchDetails());
     }
 }
 
-// BallByBallCoverageScreen class
+
 class BallByBallCoverageScreen implements Observer {
     private ConcreteSubject subject;
 
     BallByBallCoverageScreen(ConcreteSubject subject) {
         this.subject = subject;
-        subject.attach(this); // Subscribe to updates
+        subject.attach(this); 
     }
 
     @Override
     public void update(CricketMatch match) {
-        // Display ball-by-ball coverage
+        
         System.out.println("BallByBallCoverageScreen: Displaying ball-by-ball coverage for " + match.getMatchDetails());
     }
 }
@@ -120,10 +120,10 @@ public class Main {
 
         mainScreen.displayLiveMatches(liveMatches);
 
-        // Simulate user clicking on a match
+        
         mainScreen.selectMatch(liveMatches.get(0));
 
-        // Simulate a new match starting and updating both screens
+        
         CricketMatch newMatch = new CricketMatch("Australia vs England");
         subject.setMatch(newMatch);
     }
